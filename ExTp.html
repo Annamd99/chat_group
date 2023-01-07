@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Chat du Groupe</title>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <script type="text/javascript">
+           
+       
+        function addmsg() {
+
+            var message = document.getElementById("zonetext").value;
+            var email = document.getElementById("email").value;
+            console.log(message);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", " http://chakerbm.tn/services/addmessage.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+            xhr.send("message=" + message + "&email=" + email + "");
+
+
+        }
+
+
+        charger();
+        setInterval(function () {
+            charger();
+        }, 2000);
+        
+        function inscrit() {
+
+            var nom = document.getElementById("nom_inscrit").value;
+            var mail = document.getElementById("email_inscrit").value;
+            var pswd = document.getElementById("pswd_inscrit").value;
+            console.log(nom);
+            console.log(mail);
+            console.log(pswd);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "http://chakerbm.tn/services/adduser.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+            xhr.send("nom=" + nom + "&email=" + mail + "&pass=" + pswd + "");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseXML);
+
+                }
+            }
+        }
+        function login() {
+
+            var mail = document.getElementById("email").value;
+            var pswd = document.getElementById("pswd").value;
+            console.log(mail);
+            console.log(pswd);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://chakerbm.tn/services/verif.php"+"email=" + email + "&pass=" + pswd, true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded; charset=UTF-8");
+            xhr.send();
+            var j = document.getElementById("tete2");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseXML);
+                    document.getElementById("zonetext").disabled = false;
+                    document.getElementById("bouton").disabled = false;
+                    document.getElementById("nom_inscrit").hidden = true;
+                    document.getElementById("email_inscrit").hidden = true;
+                    document.getElementById("pswd_inscrit").hidden = true;
+                    document.getElementById("tete").hidden = true;
+                    document.getElementById("bouton").hidden = true;
+
+                    var t = j.innerHTML = "Bienvenue " + mail;
+
+                    document.getElementById("email").hidden = true;
+                    document.getElementById("pswd").hidden = true;
+                    document.getElementById("bouton2").hidden = true;
+
+
+
+
+                }
+            }
+        }
+    </script>
+
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-bg-primary text-white " >
+                    <h1 id="first">
+                        Chat ESSAT V1.0
+                    </h1>
+    
+                </div>
+            </div>
+       </div><br>
+       <div class="container-fluid" >
+            <div class="row">
+                <div class="col-3 " >
+                    <div class="card bg-light text-dark">
+                        <div class="card-body">
+                            <label for="usr" id="tele2">Connexion</label>
+            
+                            <div class="input-group mb-3 ">
+                                <input type="email" class="form-control"  id="email"placeholder="Votre mail" aria-label="Votre mail" aria-describedby="basic-addon1">
+                              </div>
+                              <div class="input-group mb-3">
+                                <input type="password" class="form-control" id="pswd" placeholder="Votre Password" id="aria-label="Votre Password" aria-describedby="basic-addon2">
+                              </div>
+                              <button type="button" class="btn btn-primary col-12 " id="bouton" onclick="login()">Connexion</button>
+
+                        </div>
+                    </div> 
+
+                </div> 
+                <div class="col-9 " id="2">
+                    <div class="input-group">
+                        <input type="text " class="form-control "disabled="disabled" id="zonetext"  placeholder="Votre message" aria-label="Votre message" aria-describedby="basic-addon1">
+                        <button type="button" class="btn btn-warning  "  disabled="disabled" id="bouton" onclick="addmsg()" >Envoi le msg</button>
+                    </div>
+                    <br>
+                    <div class="col-12 border bg-light">
+                        <div class="card p-5" style="background-color: #f6fafd;">
+                            <ul>
+
+                            </ul>
+                        </div>
+                        
+                       
+                    </div>
+                   
+  
+                </div>
+             </div>
+        </div>
+        <br>
+        <div class="container-fluid" >
+            <div class="row">
+                <div class="col-3" 
+                
+                >
+                    <div class="card bg-light text-dark">
+                        <div class="card-body" >
+                            <label for="usr" id="tele"><b>Inscription</b></label>
+                            <div class="input-group mb-3 ">
+                                <input type="text" class="form-control" id="nom_inscrit" placeholder="Votre nom" aria-label="Votre nom" aria-describedby="basic-addon1">
+                              </div>
+                              <div class="input-group mb-3 ">
+                                <input type="text" class="form-control" placeholder="Votre mail"  id="email_inscrit"aria-label="Votre mail" aria-describedby="basic-addon1">
+                              </div>
+                              <div class="input-group mb-3 ">
+                                <input type="password" class="form-control" id="pswd_inscrit" placeholder="Votre Password" aria-label="Votre Password" aria-describedby="basic-addon1">
+                                
+                              </div>
+                              <button type="button" class="btn btn-primary col-12 " onclick="inscrit()" id="bouton">Incripition</button>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+        </div>
+    </body>
+</html>
